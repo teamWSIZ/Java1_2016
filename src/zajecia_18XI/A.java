@@ -1,4 +1,4 @@
-package zajecia_28X;
+package zajecia_18XI;
 
 import java.time.Instant;
 import java.time.ZoneId;
