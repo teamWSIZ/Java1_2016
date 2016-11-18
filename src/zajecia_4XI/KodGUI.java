@@ -16,7 +16,6 @@ public class KodGUI {
     private JButton odkodujButton;
     private JTextArea textArea2;
     private JPanel aa;
-
     public KodGUI() {
         zakodujButton.addActionListener(new ActionListener() {
             @Override
