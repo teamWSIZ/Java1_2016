@@ -1,4 +1,4 @@
-package obiektowe;
+package zajecia_4XI;
 
 import com.sun.org.apache.xpath.internal.SourceTree;
 

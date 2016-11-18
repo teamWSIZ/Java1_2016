@@ -1,4 +1,4 @@
-package b;
+package zajecia_X;
 
 /**
  * Created on 15.10.16, at 13:54

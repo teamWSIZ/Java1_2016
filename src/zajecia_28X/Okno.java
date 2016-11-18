@@ -1,3 +1,5 @@
+package zajecia_28X;
+
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -23,7 +25,7 @@ public class Okno {
         button2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                txt1.setText("tekst"); \\ustawienie tekstu dla okienka txt1
+                txt1.setText("tekst");
 
             }
         });

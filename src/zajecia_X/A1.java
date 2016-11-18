@@ -1,3 +1,5 @@
+package zajecia_X;
+
 /**
  * Created on 07.10.16, at 18:09
  */

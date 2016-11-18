@@ -1,3 +1,5 @@
+package zajecia_28X;
+
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;

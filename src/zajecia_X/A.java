@@ -1,3 +1,5 @@
+package zajecia_X;
+
 import java.util.Arrays;
 
 /**

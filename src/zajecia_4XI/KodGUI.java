@@ -1,4 +1,6 @@
-package kalkulator;
+package zajecia_4XI;
+
+import zajecia_4XI.Kod;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
