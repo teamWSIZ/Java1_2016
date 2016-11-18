@@ -49,7 +49,7 @@ public class Kod {
     public static void main(String[] args) throws Exception {
 
         String wiad = "TaJnA";
-        String pass = "1234567890123456";
+        String pass = "1234567890123456";   //hasło musi mieć 16 znaków
 
         String zakodowana = zakodujWiadomosc(wiad, pass);
         System.out.println("encrypted string: " + zakodowana);
