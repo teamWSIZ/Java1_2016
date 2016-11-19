@@ -10,12 +10,12 @@ public class B {
         //zamienić go na napis długości 16B; jeśli był krótszy to dopisać '*', jeśli dłuższy, to obciąć
 
         String napis = "abrakadabra";
-        String w = napis.substring(0, 16);
-
-
+        String w = napis.substring(0, 4);
         w += 'a';
+        System.out.println("długość=" + napis.length());
 
 
+        (napis + "**************************").substring(0, 16);
 
     }
 }
