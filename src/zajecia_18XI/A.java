@@ -22,7 +22,7 @@ public class A {
 
 //        System.out.println(ZonedDateTime.ofInstant(instant, ZoneId.systemDefault()));
 //        System.out.println(ZonedDateTime.ofInstant(instant, ZoneId.of("Europe/London")));
-        ZonedDateTime zdt = ZonedDateTime.ofInstant(instant, ZoneId.of("Europe/Prague"));
+        ZonedDateTime zdt = ZonedDateTime.ofInstant(instant, ZoneId.of("Asia/Dhaka"));
         System.out.println(DateTimeFormatter.ofPattern("yyyy/MMM/dd HH:mm:ss").format(zdt));
 //
 //        Instant later = instant.plus(5, ChronoUnit.DAYS);
