@@ -11,7 +11,7 @@ import java.math.BigInteger;
 /**
  * Created on 05.11.16, at 13:12
  */
-public class Kod {
+public class MaszynaKodowa {
     public static String toHexString(byte[] array) {
         return DatatypeConverter.printHexBinary(array);
     }
@@ -30,8 +30,8 @@ public class Kod {
         cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv);
 
         byte[] encrypted = cipher.doFinal(wiadomosc.getBytes());
-        String hexEncrypted = toHexString(encrypted);
-        return hexEncrypted;
+        String hexEncrypted = toHexString(encrypted).toLowerCase();
+        return hexEncrypted.toLowerCase();
     }
 
     //hasło ma mieć 16 znaków

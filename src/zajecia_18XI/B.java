@@ -11,11 +11,17 @@ public class B {
 
         String napis = "abrakadabra";
         String w = napis.substring(0, 4);
-        w += 'a';
+        w += '*';
         System.out.println("długość=" + napis.length());
 
+        int dlugoscTeraz = napis.length();
+        int maByc = 16;
+        int ileGwiazdek = maByc - dlugoscTeraz;
 
-        (napis + "**************************").substring(0, 16);
+
+
+
+
 
     }
 }
