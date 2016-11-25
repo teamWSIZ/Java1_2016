@@ -36,6 +36,7 @@
                   <component id="fed85" class="javax.swing.JTextArea" binding="textArea2" default-binding="true">
                     <constraints/>
                     <properties>
+                      <lineWrap value="true"/>
                       <wrapStyleWord value="false"/>
                     </properties>
                   </component>
@@ -68,11 +69,13 @@
                   </grid>
                 </constraints>
                 <properties/>
-                <border type="none"/>
+                <border type="etched" title="Tekst"/>
                 <children>
                   <component id="54b9d" class="javax.swing.JTextArea" binding="textArea1" default-binding="true">
                     <constraints/>
-                    <properties/>
+                    <properties>
+                      <lineWrap value="true"/>
+                    </properties>
                   </component>
                 </children>
               </scrollpane>

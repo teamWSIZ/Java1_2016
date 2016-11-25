@@ -31,7 +31,7 @@ public class Kodowanie {
 
         byte[] encrypted = cipher.doFinal(wiadomosc.getBytes());
         String hexEncrypted = toHexString(encrypted);
-        return hexEncrypted;
+        return hexEncrypted.toLowerCase();
     }
 
     //hasło ma mieć 16 znaków

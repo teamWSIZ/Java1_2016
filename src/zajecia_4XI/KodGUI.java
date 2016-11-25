@@ -1,7 +1,5 @@
 package zajecia_4XI;
 
-import zajecia_4XI.Kod;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -34,7 +32,7 @@ public class KodGUI {
                 haslo = wyrownajHaslo(haslo);
                 String zakodowana = "";
                 try {
-                    zakodowana = Kod.zakodujWiadomosc(wiadomosc, haslo);
+                    zakodowana = MaszynaKodowa.zakodujWiadomosc(wiadomosc, haslo);
                 } catch (Exception ee) {
                     //
                     System.out.println(ee);
@@ -50,7 +48,7 @@ public class KodGUI {
                 haslo = wyrownajHaslo(haslo);
                 String odkodowana = "";
                 try {
-                    odkodowana = Kod.odkodujWiadomosc(wiadomosc, haslo);
+                    odkodowana = MaszynaKodowa.odkodujWiadomosc(wiadomosc, haslo);
                 } catch (Exception ee) {
                     //
                     System.out.println(ee);
@@ -65,6 +63,7 @@ public class KodGUI {
         frame.setContentPane(new KodGUI().aa);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 }
