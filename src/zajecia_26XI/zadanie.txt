@@ -1,0 +1,6 @@
+_) Projekt w IntelliJ
+_) Zrozumienie String i int
+_) Stworzenie prostego GUI
+_) Uruchomienie programu z GUI
+_) Podpięcie listernerów pod elementy (np. buttony)
+_) Stworzenie wykonywalnego jar-a
