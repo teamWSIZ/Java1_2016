@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -112,7 +114,7 @@ public class Saper {
          */
         for(int i=0; i<5; i++) {
             final Integer poz = i;
-            butony[i].addActionListener(
+            butony[poz].addActionListener(
                     new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
@@ -124,10 +126,16 @@ public class Saper {
                         }
                     }
             );
+            butony[poz].addMouseListener(
+                    new MouseAdapter() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            if (e.getButton()!=3) return;
+                            butony[poz].setBackground(Color.ORANGE);
+                        }
+                    }
+            );
         }
-
-
-
     }
 
     public static void main(String[] args) {
