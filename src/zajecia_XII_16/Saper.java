@@ -25,9 +25,9 @@ public class Saper {
     // Model
     int[] miny = new int[5];
     Color czystyKolor;  //początkowe tło przycisków; zczytujemy w konstruktorze
+    JButton[] butony;
 
-
-
+    ///////////////////////////////////
 
     //To jest nasza tzw. funkcja (prywatna metoda)
     private void wylosujMiny() {
@@ -44,6 +44,16 @@ public class Saper {
         }
     }
 
+    //Ta funkcja wylicza ile jest min na lewo i prawo od pozycji `poz`
+    public int ileMinUSasiadow(int poz, int[] miny) {
+        if (poz==0) return miny[1];
+        if (poz==4) return miny[3];
+        int ile = 0;
+        if (miny[poz-1]==1) ++ile;
+        if (miny[poz+1]==1) ++ile;
+        return ile;
+    }
+
     //Ta funkcja ustawia kolor tła przycisków na taki jaki był na początku (`czystyKolor`)
     private void czyscButtonyMin() {
         a1Button.setBackground(czystyKolor);
@@ -51,12 +61,20 @@ public class Saper {
         a3Button.setBackground(czystyKolor);
         a4Button.setBackground(czystyKolor);
         a5Button.setBackground(czystyKolor);
+        for (int i = 0; i < 5; i++) {
+            butony[i].setText(" ");
+        }
     }
 
 
     //To jest konstruktor, czyli coś uruchamianego w momencie wykonania `new Saper()`
     public Saper() {
         czystyKolor = a1Button.getBackground(); //zczytujemy jakie jest zwykłe tło przycisków
+        //Zbieranie buttonów do tablicy
+        butony = new JButton[]{a1Button, a2Button, a3Button, a4Button, a5Button};
+        czyscButtonyMin();
+
+
 
         System.out.println("Generuję miny...");
         wylosujMiny();
@@ -87,6 +105,29 @@ public class Saper {
                 czyscButtonyMin();
             }
         });
+
+        /**
+         * Uwaga: to jest automatyzacja dodawania listenerów do wszystkich buttonów;
+         * alternatywnie można po kolei dla każdego dodać takie akcje.
+         */
+        for(int i=0; i<5; i++) {
+            final Integer poz = i;
+            butony[i].addActionListener(
+                    new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            if (miny[poz]==1) butony[poz].setBackground(Color.BLACK);
+                            else {
+                                butony[poz].setBackground(Color.GREEN);
+                            }
+                            butony[poz].setText(""+ileMinUSasiadow(poz, miny));
+                        }
+                    }
+            );
+        }
+
+
+
     }
 
     public static void main(String[] args) {
