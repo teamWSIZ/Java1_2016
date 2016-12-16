@@ -16,9 +16,12 @@ public class Saper {
 
     ///////////////////////////////////
     // Model
+    int[] miny = new int[5];
 
-
-
+    //To jest konstruktor, czyli coś uruchamianego w momencie wykonania `new Saper()`
+    public Saper() {
+        
+    }
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("Saper");
