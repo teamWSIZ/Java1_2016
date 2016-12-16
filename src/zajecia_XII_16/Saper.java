@@ -24,7 +24,7 @@ public class Saper {
     ///////////////////////////////////
     // Model
     int[] miny = new int[5];
-    Color czystyKolor;
+    Color czystyKolor;  //początkowe tło przycisków; zczytujemy w konstruktorze
 
 
 
@@ -39,11 +39,12 @@ public class Saper {
         //Generowanie losowych pozycji min
         Random rr = new Random();
         for (int i = 0; i < 3; i++) {
-            int pozycja = rr.nextInt(5);
+            int pozycja = rr.nextInt(5);    //losuje liczbe 0..4
             miny[pozycja] = 1;  //ustawienie, ze na tej pozycji ma byc mina
         }
     }
 
+    //Ta funkcja ustawia kolor tła przycisków na taki jaki był na początku (`czystyKolor`)
     private void czyscButtonyMin() {
         a1Button.setBackground(czystyKolor);
         a2Button.setBackground(czystyKolor);
@@ -55,7 +56,7 @@ public class Saper {
 
     //To jest konstruktor, czyli coś uruchamianego w momencie wykonania `new Saper()`
     public Saper() {
-        czystyKolor = a1Button.getBackground();
+        czystyKolor = a1Button.getBackground(); //zczytujemy jakie jest zwykłe tło przycisków
 
         System.out.println("Generuję miny...");
         wylosujMiny();
