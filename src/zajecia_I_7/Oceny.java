@@ -5,6 +5,9 @@ package zajecia_I_7;
  */
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Arrays;
 
 /**
  * Okno do liczenia średniej z ocen
@@ -19,6 +22,28 @@ public class Oceny {
     private JTextField textField2;
     private JPanel mp;
     private JLabel label1;
+
+    public Oceny() {
+        liczSredniaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String oc = textField1.getText();
+                String[] oceny = oc.split(",");
+                System.out.println(Arrays.toString(oceny));
+
+                double suma = 0;
+
+                for (int i = 0; i < oceny.length; i++) {
+                    System.out.println("Element numer " + i + " =" + oceny[i]);
+                    double nota = Double.valueOf(oceny[i]);
+                    suma += nota;
+                    System.out.println("razy dwa: " + nota*2 + " teraz suma=" + suma);
+                }
+                double avg = suma / oceny.length;
+                textField2.setText(String.valueOf(avg));
+            }
+        });
+    }
 
     private void createUIComponents() {
         label1 = new JLabel("");
