@@ -77,9 +77,8 @@ public class EntryToFile {
     private void zapiszPlik(String sciezka) {
         try {
             Path lokalizacja = Paths.get(sciezka);
-            Files.write(lokalizacja, textArea1.getText().getBytes());
+            Files.write(lokalizacja, textArea1.getText().getBytes("UTF-8"));
         } catch (Exception e) {
-
         }
     }
 

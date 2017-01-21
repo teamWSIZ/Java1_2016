@@ -1,7 +1,5 @@
 package zajecia_I_14;
 
-import zajecia_I_7.Oceny;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -34,13 +32,14 @@ public class FKwadratowa {
                 int b = Integer.valueOf(napis[1]);
                 int c = Integer.valueOf(napis[2]);
 
-                //liczymy delte i wyciągamy pierwiastek (Math.sqrt() liczy na pierwiastek z liczby)
-                double pDt = Math.sqrt(b * b - 4 * a * c);
-                if (pDt > 0) {
+                double dt = b * b - 4 * a * c;
+                if (dt > 0) {
+                    //liczymy delte i wyciągamy pierwiastek (Math.sqrt() liczy na pierwiastek z liczby)
+                    double pDt = Math.sqrt(dt);
                     double x1 = (-b - pDt) / 2 * a;
                     double x2 = (-b + pDt) / 2 * a;
                     wyswietlWinyk.setText("X1 = " + x1 + " X2 = " + x2);
-                } else if (pDt == 0) {
+                } else if (dt == 0) {
                     wyswietlWinyk.setText("X0 = " + (-b / 2 * a));
                 } else {
                     wyswietlWinyk.setText("Delta jest ujemna");
