@@ -7,6 +7,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -30,27 +32,49 @@ public class PlikiForm {
     private JLabel lblZnaki;
     private JComboBox comboBox1;
 
+    private Properties prop;
+    private JFrame frejm;
+
     public static void main(String[] args) throws Exception {
-        Properties wczytane = new Properties();
-        FileInputStream in = new FileInputStream("nasze.properties");
-        wczytane.load(in);
-        System.out.println(wczytane.getProperty("nazwaFontu"));
-        System.out.println(wczytane.getProperty("wielkoscFontu"));
+
         //UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         JFrame frame = new JFrame("PlikiForm");
-        frame.setContentPane(new PlikiForm().panel);
+        frame.setContentPane(new PlikiForm(frame).panel); //przekazujemy frame do konstruktora
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
         //--------------------------
-        Properties p = new Properties();
-        p.setProperty("nazwaFontu", "Calibri");
-        p.setProperty("wielkoscFontu", "16");
-        FileOutputStream out = new FileOutputStream("nasze.properties");
-        p.store(out,null);
     }
 
-    public PlikiForm() {
+    void czytajUstawienia() {
+        try {
+            prop = new Properties();
+            FileInputStream in = new FileInputStream("nasze.properties");
+            prop.load(in);
+            String fontName = prop.getProperty("nazwaFontu");
+            textArea1.setFont(new Font(fontName, 0 , 16));
+            System.out.println("ustawilem:" + fontName);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    void zapiszUstawienia() {
+        try {
+            prop = new Properties();
+            Font czcionka = textArea1.getFont();
+            prop.setProperty("nazwaFontu", czcionka.getFontName());
+            prop.setProperty("wielkoscFontu", "" + czcionka.getSize());
+            FileOutputStream out = new FileOutputStream("nasze.properties");
+            prop.store(out, null);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //Kontruktor całego GUI
+    public PlikiForm(JFrame fff) {//przekazanie frame do konstruktora
+        frejm = fff;// przypisanie przekazanego kontruktora do naszej zmiennej
         wczytajButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -94,7 +118,8 @@ public class PlikiForm {
             public void caretUpdate(CaretEvent e) {
                 //to się wywoła jak cokolwiek zrobimy na polu tekstowym
                 String tekst = textArea1.getText();
-                liczWyrazy(tekst);
+                int nWyrazow = liczWyrazy(tekst);
+                lblWyrazy.setText("Wyrazów:" + nWyrazow);
                 lblZnaki.setText("Ilość znaków: " + tekst.length()); //wywietlamy ilość znakow
             }
         });
@@ -105,6 +130,17 @@ public class PlikiForm {
                 String czcionka = (String) comboBox1.getSelectedItem();
                 System.out.println(czcionka);
                 textArea1.setFont(new Font(czcionka,Font.PLAIN, 16)); //Plain = zwykły
+            }
+        });
+        czytajUstawienia();
+
+        //wvent na zamknięcie okna
+        frejm.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                //dodać "are you sure?"
+                zapiszUstawienia();
+                super.windowClosing(e);
             }
         });
     }
@@ -121,21 +157,20 @@ public class PlikiForm {
 
     private void zapiszStringDoFile(String tekst, File fajl) {
         try {
-            Path lokalizacja = Paths.get(fajl.getPath() + ".txt");
-            Files.write(lokalizacja, tekst.getBytes("UTF-8"));
+            Files.write(fajl.toPath(), tekst.getBytes("UTF-8"));
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void liczWyrazy(String tekst) {
-        if (tekst.isEmpty()) { //sprawdzamy czy tekst jest pusty
-            lblWyrazy.setText("Ilość wyrazów: 0");
-        } else {
-            tekst = tekst.replace("\n", " ");
-            String[] wyrazy = tekst.split(" ");
-            lblWyrazy.setText("Ilość wyrazów: " + wyrazy.length);
+    //Nasza funkcja; bierze tekst, liczy liczbe wyrazów którą też zwraca.
+    private int liczWyrazy(String tekst) {
+        if (tekst.isEmpty()) {
+            return 0;
         }
+        tekst = tekst.replace("\n", " ");
+        String[] wyrazy = tekst.split(" ");
+        return wyrazy.length;
     }
 
 

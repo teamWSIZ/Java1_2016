@@ -96,7 +96,7 @@
             <properties>
               <model>
                 <item value="Arial"/>
-                <item value="Console"/>
+                <item value="Courier New"/>
                 <item value="Calibri"/>
               </model>
             </properties>
