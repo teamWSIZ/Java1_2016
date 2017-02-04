@@ -52,7 +52,7 @@ public class PlikiForm {
             FileInputStream in = new FileInputStream("nasze.properties");
             prop.load(in);
             String fontName = prop.getProperty("nazwaFontu");
-            textArea1.setFont(new Font(fontName, 0 , 16));
+            textArea1.setFont(new Font(fontName, 0, 16));
             System.out.println("ustawilem:" + fontName);
         } catch (IOException e) {
             e.printStackTrace();
@@ -129,7 +129,7 @@ public class PlikiForm {
             public void actionPerformed(ActionEvent e) {
                 String czcionka = (String) comboBox1.getSelectedItem();
                 System.out.println(czcionka);
-                textArea1.setFont(new Font(czcionka,Font.PLAIN, 16)); //Plain = zwykły
+                textArea1.setFont(new Font(czcionka, Font.PLAIN, 16)); //Plain = zwykły
             }
         });
         czytajUstawienia();
