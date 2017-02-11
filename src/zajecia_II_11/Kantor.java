@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.security.SecureRandom;
 import java.util.Random;
-import java.util.function.Function;
 
 /**
  * Created by stasz_000 on 2017-02-11.
@@ -19,25 +18,39 @@ public class Kantor {
     private JLabel eIle;
     private JLabel rIle;
     private JLabel lblKonto;
-    private JRadioButton radioButton2;
-    private JRadioButton radioButton1;
+    private JRadioButton walutaRubel;
+    private JRadioButton walutaEuro;
     private JComboBox comboBox1;
 
+    //Dane w systemie (kursy walut i ilość gotówki)
     private Double kursEuro;
     private Double kursRubla;
     private double konto = 1000.00;
 
+    /**
+     * Funkcja odświeżająca label-e pokazujące ceny walut
+     */
     private void refreshWindow() {
-        String rubel = String.format(java.util.Locale.US,"%.4f", kursRubla);
-        String euro = String.format(java.util.Locale.US,"%.4f", kursEuro);
+        //Formatowanie zmiennych ułamkowych tak, by pokazywało 4 miejsca po przecinku
+        String rubel = String.format(java.util.Locale.US, "%.4f", kursRubla);
+        String euro = String.format(java.util.Locale.US, "%.4f", kursEuro);
+        //Wyświetlanie na GUI
         rKupno.setText("" + rubel);
         eKupno.setText("" + euro);
+        //napisać zliczanie pieniedzy
     }
 
     public Kantor() {
-        lblKonto.setText(konto +"");
+        lblKonto.setText(konto + "");
         kursEuro = new Double(4.20);
         kursRubla = new Double(0.069);
+
+        /**
+         * To jest mechanizm który dokładnie co 1sekundę losuje zmiany ceny walut i
+         * wywołuje odświeżanie ich wyświetlania na GUI;
+         *
+         * Można dociągnąć dane z internetu: https://cinkciarz.pl/statics/currency/eur/ajax
+         */
         Thread timerek = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -50,7 +63,7 @@ public class Kantor {
                     }
                     kursEuro *= (1 + 0.01 * r.nextGaussian());
                     kursRubla *= (1 + 0.05 * r.nextGaussian());
-                    SwingUtilities.invokeLater(()->{
+                    SwingUtilities.invokeLater(() -> {
                         refreshWindow();
                     });
                 }
@@ -58,49 +71,64 @@ public class Kantor {
         });
         timerek.start();
 
+
         btnKup.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (radioButton1.isSelected())
-                {
-                    int ile = Integer.valueOf(eIle.getText());
-                    ile+= kupWalute(kursEuro);
-                    eIle.setText("" + ile);
-                    lblKonto.setText(String.format(java.util.Locale.US,"%.2f", konto));
+                int sztuk = Integer.valueOf((String) comboBox1.getSelectedItem());
+                if (walutaEuro.isSelected()) {
+                    int posiadaneEUR = Integer.valueOf(eIle.getText());
+                    posiadaneEUR += kupWalute(kursEuro, sztuk);
+                    eIle.setText("" + posiadaneEUR);
 
-                }else if (radioButton2.isSelected())
-                {
-                    int ile = Integer.valueOf(rIle.getText());
-                    ile+= kupWalute(kursRubla);
-                    rIle.setText("" + ile);
-                    lblKonto.setText(String.format(java.util.Locale.US,"%.2f", konto));
+                } else if (walutaRubel.isSelected()) {
+                    int posiadaneRuble = Integer.valueOf(rIle.getText());
+                    posiadaneRuble += kupWalute(kursRubla, sztuk);
+                    rIle.setText("" + posiadaneRuble);
                 }
+                lblKonto.setText(String.format(java.util.Locale.US, "%.2f", konto));
             }
         });
 
         btnSprz.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (radioButton1.isSelected())
-                {
+                int ileSztuk = Integer.valueOf((String) comboBox1.getSelectedItem());
+                if (walutaEuro.isSelected()) {
+                    int posiadaneEuro = Integer.valueOf(eIle.getText());
+                    posiadaneEuro -= sprzedajWalute(kursEuro, ileSztuk, posiadaneEuro);
+                    eIle.setText(posiadaneEuro + "");
 
-                }else
-                {
-
+                } else if (walutaRubel.isSelected()) {
+                    int posiadaneRuble = Integer.valueOf(rIle.getText());
+                    posiadaneRuble -= sprzedajWalute(kursRubla, ileSztuk, posiadaneRuble);
+                    rIle.setText(posiadaneRuble + "");
                 }
+                lblKonto.setText(String.format(java.util.Locale.US, "%.2f", konto));
             }
         });
     }
 
-    private int kupWalute(double cena)
-    {
-        int ile = Integer.valueOf((String)comboBox1.getSelectedItem());
-        if(konto > ile*cena){
-            konto -= ile*cena;
-            return ile;
-        }
-        else
+    /**
+     * Funkcja próbująca kupić walutę po cenie `cena`; liczba do kupienia jest odczytywana z
+     * `comboBox1`.
+     */
+    private int kupWalute(double cena, int sztuk) {
+        if (konto >= sztuk * cena) {
+            konto -= sztuk * cena;
+            return sztuk;
+        } else {
             return 0;
+        }
+    }
+
+    private int sprzedajWalute(double cena, int sztuk, int posiadane) {
+        if (posiadane >= sztuk) {
+            konto = konto + (cena * sztuk);
+            return sztuk;
+        } else {
+            return 0;
+        }
     }
 
     public static void main(String[] args) {
