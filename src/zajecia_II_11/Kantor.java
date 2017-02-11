@@ -63,10 +63,17 @@ public class Kantor {
             public void actionPerformed(ActionEvent e) {
                 if (radioButton1.isSelected())
                 {
+                    int ile = Integer.valueOf(eIle.getText());
+                    ile+= kupWalute(kursEuro);
+                    eIle.setText("" + ile);
+                    lblKonto.setText(String.format(java.util.Locale.US,"%.2f", konto));
 
-                }else
+                }else if (radioButton2.isSelected())
                 {
-
+                    int ile = Integer.valueOf(rIle.getText());
+                    ile+= kupWalute(kursRubla);
+                    rIle.setText("" + ile);
+                    lblKonto.setText(String.format(java.util.Locale.US,"%.2f", konto));
                 }
             }
         });
@@ -87,7 +94,7 @@ public class Kantor {
 
     private int kupWalute(double cena)
     {
-        int ile = (int)comboBox1.getSelectedItem();
+        int ile = Integer.valueOf((String)comboBox1.getSelectedItem());
         if(konto > ile*cena){
             konto -= ile*cena;
             return ile;
