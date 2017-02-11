@@ -21,6 +21,10 @@ public class Kantor {
     private JRadioButton walutaRubel;
     private JRadioButton walutaEuro;
     private JComboBox comboBox1;
+    private JLabel cenaEuroPos;
+    private JLabel cenaRublaPos;
+    private JLabel sumaKonta;
+    private JLabel sumaWalut;
 
     //Dane w systemie (kursy walut i ilość gotówki)
     private Double kursEuro;
@@ -38,6 +42,23 @@ public class Kantor {
         rKupno.setText("" + rubel);
         eKupno.setText("" + euro);
         //napisać zliczanie pieniedzy
+        int posiadaneEuro = Integer.valueOf(eIle.getText());//pobieramy ile posiadamy Euro
+        double sumaEuro = posiadaneEuro*kursEuro; //obliczamy sume euro
+        cenaEuroPos.setText(String.format(java.util.Locale.US, "%.2f", sumaEuro)); //wyświetlamy z fomratowaniem
+        //do 2 miejsc po przecinku
+
+        int posiadaneRuble = Integer.valueOf(rIle.getText());//pobieramy ile posiadamy Ruble
+        double sumaRubla = posiadaneRuble*kursRubla;
+        cenaRublaPos.setText(String.format(java.util.Locale.US, "%.2f", sumaRubla));
+
+        //suma euro i rubla
+        double sumaEuroRubla = sumaEuro + sumaRubla;
+        sumaWalut.setText(String.format(java.util.Locale.US, "%.2f", sumaEuroRubla));
+
+        //suma całego konta z euro i ublem
+        double sumaOgolna = sumaEuroRubla + konto;
+        sumaKonta.setText(String.format(java.util.Locale.US, "%.2f", sumaOgolna));
+
     }
 
     public Kantor() {
